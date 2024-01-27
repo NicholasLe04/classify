@@ -14,7 +14,7 @@ connections.connect(
   token=getenv('CLUSTER_API_KEY'), 
 )
 
-collection = Collection("course_sm")
+collection = Collection(getenv('COLLECTION'))
 
 def insert_into_db(course_code, embedding):
     data = [
