@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 12px 0;
 }
 
 .course-search ul {
@@ -25,6 +26,15 @@
     font-weight: 600;
     margin: 0;
     margin-bottom: 10px;
+}
+
+#loading-text {
+    margin: 0;
+}
+
+.disabled {
+    opacity: 0.2;
+    pointer-events: none;
 }
 
 #course-search-bar {
