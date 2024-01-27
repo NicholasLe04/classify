@@ -5,7 +5,7 @@ from torch.cuda import is_available
 load_dotenv()
 
 device = 'cuda' if is_available() else 'cpu'
-model = SentenceTransformer("sentence-transformers/all-distilroberta-v1", device=device)
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L12-v2", device=device)
 
 def generate_desc_embedding(description: str):
     return model.encode(description)
