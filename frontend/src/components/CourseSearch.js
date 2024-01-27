@@ -15,7 +15,8 @@ function CourseSearch() {
         method: "POST",
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'api_key': process.env.API_KEY
         },
         body: JSON.stringify({
           "user_query": prompt,
