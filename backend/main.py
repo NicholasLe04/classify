@@ -18,6 +18,3 @@ app.include_router(courses.router, prefix="/api/v1")
 @app.get("/")
 async def root():
     return { "message": "greetings traveller" }
-
-if __name__ == "__main__":
-    uvicorn.run("main:app")
