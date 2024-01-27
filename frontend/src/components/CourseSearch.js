@@ -6,9 +6,8 @@ function CourseSearch() {
   const [recommendations, setRecommendations] = useState([]);
 
   function getRecommendations(prompt) {
-    console.log(prompt)
     fetch(
-      "http://localhost/api/v1/get-courses", 
+      `${process.env.REACT_APP_API_ENDPOINT_BASE}/api/v1/get-courses`, 
       {
         method: "POST",
         headers: {
