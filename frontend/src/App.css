@@ -1,0 +1,13 @@
+.App {
+  color: white;
+  min-height: 100vh;
+  text-align: center;
+  background-color: #272822;
+  display: flex;
+  flex-direction: column;
+}
+
+.Title {
+  color: rgb(155, 119, 255);
+  margin-top: 50px;
+}
