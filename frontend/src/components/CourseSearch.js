@@ -16,7 +16,7 @@ function CourseSearch() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'api_key': process.env.API_KEY
+          'x-api-key': process.env.REACT_APP_API_KEY
         },
         body: JSON.stringify({
           "user_query": prompt,
