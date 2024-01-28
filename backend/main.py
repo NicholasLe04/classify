@@ -13,7 +13,3 @@ app.add_middleware(
 )
 
 app.include_router(courses.router, prefix="/api/v1")
-
-@app.get("/")
-async def root():
-    return { "message": "greetings traveller" }
