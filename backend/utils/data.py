@@ -59,9 +59,11 @@ def insert_courses_from_json(json_file_path):
                 (course_num[0] == "2" and len(course_num) == 3 and course_num[-1].isnumeric())):
                 print(f'{course_code} already exists')
                 continue
-            description = data[course_code]
-            embedding = generate_desc_embedding(description)
+            course_info = f'{course_code}: {data[course_code]}'
+            course_info = course_info[course_info.index('- ')+2:]
+            embedding = generate_desc_embedding(course_info)
             insert_into_db(course_code, embedding)
+            print(f'{course_code} inserted.')
 
 def find_related_courses(query,limit):
     embedding = generate_desc_embedding(query)
