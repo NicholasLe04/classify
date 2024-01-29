@@ -2,12 +2,12 @@ FROM python:3.10.2-slim-buster
 
 COPY ./requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 COPY ./ /app
 
 WORKDIR /app
 
-EXPOSE 6969
+EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "6969", "--ssl-keyfile", "./key.pem", "--ssl-certfile", "./cert.pem"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
