@@ -13,11 +13,8 @@ services:
     image: nginx
     ports:
       - 80:80
-      - 443:443
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./backend/certbot/conf:/etc/letsencrypt
-      - ./backend/certbot/www:/var/www/certbot
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf
 
   frontend:
     container_name: frontend
@@ -27,14 +24,6 @@ services:
     volumes:
       - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf 
     restart: 'on-failure'
-
-  certbot:
-    container_name: certbot
-    image: certbot/certbot
-    volumes:
-      - ./backend/certbot/conf:/etc/letsencrypt
-      - ./backend/certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email nicholasl.le224@gmail.com -d base.nicholasle.me --agree-tos
 
   cadvisor:
     container_name: cadvisor
@@ -81,4 +70,4 @@ services:
     depends_on:
       - prometheus
     ports:
-      - 3001:3000
+      - 9090:3000
