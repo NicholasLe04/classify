@@ -65,8 +65,10 @@ function CourseSearch() {
         }
         {
           recommendations.length > 0 && 
-          <button id='load-more' onClick={() => {
-            getRecommendations(recommendations.length + 5)
+          <button id='load-more' className={loading ? 'disabled' : ''} onClick={() => {
+            if (!loading) {
+              getRecommendations(recommendations.length + 5)
+            }
           }}>
             Load More
           </button>
