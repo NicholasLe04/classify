@@ -47,10 +47,14 @@ def scrape_courses_from_page(page_url):
             if 'Prerequisite' in course_info:
                 desc_end_idx = min(desc_end_idx, course_info.index('Prerequisite'))
             course_desc = course_info[desc_start_idx:desc_end_idx]
-            course_description_map[course_name] = course_desc
+            course_description_map[course_name] = {
+                "course_description": course_desc,
+                "catoid": catoid,
+                "coid": coid
+            }
             print(course_name)
 
-    add_to_json_dict('descriptions.json', course_description_map)
+    add_to_json_dict('./utils/descriptions.json', course_description_map)
             
 def add_to_json_dict(json_file_path, new_data):
     with open(json_file_path, 'r+') as file:
