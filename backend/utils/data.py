@@ -59,7 +59,7 @@ def insert_courses_from_json(json_file_path):
                 (course_num[0] == "2" and len(course_num) == 3 and course_num[-1].isnumeric())):
                 print(f'{course_code} already exists')
                 continue
-            course_info = f'{course_code}: {data[course_code]}'
+            course_info = f'{course_code}: {data[course_code]["course_description"]}'
             course_info = course_info[course_info.index('- ')+2:]
             embedding = generate_desc_embedding(course_info)
             insert_into_db(course_code, embedding)
@@ -69,7 +69,7 @@ def find_related_courses(query,limit):
     embedding = generate_desc_embedding(query)
     return semantic_search(embedding, limit)
 
-def add_descriptions(json_file_path, course_list):
+def add_course_data(json_file_path, course_list):
     with open(json_file_path, 'r') as file:
         data = json.load(file)
 
@@ -79,7 +79,7 @@ def add_descriptions(json_file_path, course_list):
         output.append(
             {
                 "course_code": course,
-                "course_description": data[course]
+                "course_data": data[course]
             }
         )
 

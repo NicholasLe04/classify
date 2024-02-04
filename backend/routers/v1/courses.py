@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Security
 from fastapi.security import APIKeyHeader
 
 from models.courses import CourseRequest, CourseResponse
-from utils.data import find_related_courses, add_descriptions
+from utils.data import find_related_courses, add_course_data
 
 load_dotenv()
 
@@ -26,6 +26,6 @@ async def get_courses(request_body: CourseRequest, api_key: str = Security(get_a
         request_body.user_query,
         request_body.limit
     )
-    courses = add_descriptions('./utils/descriptions.json', courses)
+    courses = add_course_data('./utils/descriptions.json', courses)
     return { "courses": courses }
 

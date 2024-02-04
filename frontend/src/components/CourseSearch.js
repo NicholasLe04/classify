@@ -10,7 +10,7 @@ function CourseSearch() {
     setLoading(true);
 
     fetch(
-      `${process.env.REACT_APP_API_ENDPOINT_BASE}/api/v1/get-courses`, 
+      `${process.env.REACT_APP_API_ENDPOINT_BASE}/api/v1/get-courses/`, 
       {
         method: "POST",
         headers: {
@@ -55,10 +55,12 @@ function CourseSearch() {
         {
           recommendations.map((course) => {
             return (
-              <li>
-                <p className='course-code'>{course.course_code}</p>
-                <p>{course.course_description}</p>
-              </li>
+              <a href={`https://catalog.sjsu.edu/preview_course_nopop.php?catoid=${course.course_data.catoid}&coid=${course.course_data.coid}`} target='__blank'>
+                <li>
+                  <p className='course-code'>{course.course_code}</p>
+                  <p>{course.course_data.course_description}</p>
+                </li>
+              </a>
             )
           })
         }

@@ -3,7 +3,7 @@ from typing import List
 
 class Course(BaseModel):
     course_code: str
-    course_description: str
+    course_data: dict
 
 class CourseRequest(BaseModel):
     user_query: str
