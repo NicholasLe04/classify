@@ -26,6 +26,6 @@ async def get_courses(request_body: CourseRequest, api_key: str = Security(get_a
         request_body.user_query,
         request_body.limit
     )
-    courses = add_course_data('./utils/descriptions.json', courses)
+    courses = add_course_data(courses)
     return { "courses": courses }
 
