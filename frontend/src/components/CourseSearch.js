@@ -4,6 +4,7 @@ import "./CourseSearch.css";
 function CourseSearch() {
 
   const [loading, setLoading] = useState(false);
+  const [school, setSchool] = useState("sjsu")
   const [prompt, setPrompt] = useState("");
   const [recommendations, setRecommendations] = useState([]);
 
@@ -24,6 +25,7 @@ function CourseSearch() {
             'x-api-key': process.env.REACT_APP_API_KEY
           },
           body: JSON.stringify({
+            "school": "sjsu",
             "user_query": prompt,
             "limit": limit
           })
@@ -37,10 +39,14 @@ function CourseSearch() {
 
   return (
     <div className='course-search'>
+      <select name="schools" id="schools">
+        <option value="sjsu">sjsu</option>
+        <option value="chapman">chapman</option>
+      </select>
       <input 
         id='course-search-bar'
         className={loading ? 'disabled' : ''}
-        placeholder='I love to...' 
+        placeholder='Type something your interested in...' 
         type='text'
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => {
@@ -54,10 +60,10 @@ function CourseSearch() {
         {
           recommendations.map((course) => {
             return (
-              <a href={`https://catalog.sjsu.edu/preview_course_nopop.php?catoid=${course.course_data.catoid}&coid=${course.course_data.coid}`} target='__blank'>
+              <a href={`https://catalog.sjsu.edu/preview_course_nopop.php?catoid=${course.catoid}&coid=${course.coid}`} target='__blank'>
                 <li>
                   <p className='course-code'>{course.course_code}</p>
-                  <p>{course.course_data.course_description}</p>
+                  <p>{course.course_description}</p>
                 </li>
               </a>
             )

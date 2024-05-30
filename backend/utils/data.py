@@ -14,31 +14,39 @@ connections.connect(
   token=getenv('CLUSTER_API_KEY'), 
 )
 
-collection = Collection(getenv('COLLECTION'))
+collections = dict()
 
-def insert_into_db(course_code, embedding):
+def insert_into_db(school, course_code, embedding):
     data = [
         [course_code], 
         [embedding]
     ]
-    collection.insert(data)
+    if school not in collections:
+        collections[school] = Collection(school)
+    collections[school].insert(data)
     print(f'{course_code} inserted')
 
-def delete_course(course_code:str):
-    collection.delete(f'course_code=="{course_code}"')
+def delete_course(school, course_code:str):
+    if school not in collections:
+        collections[school] = Collection(school)
+    collections[school].delete(f'course_code=="{course_code}"')
     print(f'{course_code} deleted')
 
-def already_exists(course_code:str):
-    return collection.query(expr=f'course_code == "{course_code}"')
+def already_exists(school, course_code:str):
+    if school not in collections:
+        collections[school] = Collection(school)
+    return collections[school].query(expr=f'course_code == "{course_code}"')
 
-def semantic_search(input_embedding, limit):
+def semantic_search(school, input_embedding, limit):
     search_param = {
         "data": [input_embedding],
         "anns_field": "course_desc_embedding",
         "param": {"metric_type": "L2"},
         "limit": limit
     }
-    res = collection.search(**search_param)
+    if school not in collections:
+        collections[school] = Collection(school)
+    res = collections[school].search(**search_param)
     hits = res[0]
     result = []
 
@@ -48,8 +56,10 @@ def semantic_search(input_embedding, limit):
     return result
 
 # OBSOLETE
-def insert_courses_from_sql():
-    collection_dict = collection.query(expr='', limit=16383)
+def insert_courses_from_sql(school):
+    if school not in collections:
+        collections[school] = Collection(school)
+    collection_dict = collections[school].query(expr='', limit=16383)
     keys = [list(el.values())[0] for el in collection_dict]
 
     for (course_code, course_desc, _, _) in get_courses():
@@ -78,15 +88,15 @@ def insert_courses_from_sql():
     #         insert_into_db(course_code, embedding)
     #         print(f'{course_code} inserted.')
 
-def find_related_courses(query,limit):
+def find_related_courses(school, query,limit):
     embedding = generate_desc_embedding(query)
-    return semantic_search(embedding, limit)
+    return semantic_search(school, embedding, limit)
 
-def add_course_data(course_list):
+def add_course_data(school, course_list):
     output = []
 
     for course in course_list:
-        course_code, description, catoid, coid = get_course_info(course)
+        course_code, description, catoid, coid = get_course_info(school, course)
         output.append(
             {
                 "course_code": course_code,
