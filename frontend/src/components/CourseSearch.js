@@ -39,8 +39,10 @@ function CourseSearch() {
 
   return (
     <div className='course-search'>
-      <select name="schools" id="schools" onChange={(e) => setSchool(e.target.value)}>
-        <option value="sjsu">sjsu</option>
+      <select name="schools" id="school-select" onChange={(e) => setSchool(e.target.value)}>
+        <option value="sjsu">
+          San Jose State University
+        </option>
       </select>
       <input 
         id='course-search-bar'
