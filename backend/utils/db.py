@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("./utils/descriptions.sqlite3")
+conn = sqlite3.connect("./data/descriptions.sqlite3")
 curr = conn.cursor()
 
 def create_table(school_name):
