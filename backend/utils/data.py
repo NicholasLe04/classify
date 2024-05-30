@@ -49,10 +49,8 @@ def semantic_search(school, input_embedding, limit):
     res = collections[school].search(**search_param)
     hits = res[0]
     result = []
-
     for hit in hits:
         result.append(hit.id)
-
     return result
 
 # OBSOLETE
@@ -61,7 +59,6 @@ def insert_courses_from_sql(school):
         collections[school] = Collection(school)
     collection_dict = collections[school].query(expr='', limit=16383)
     keys = [list(el.values())[0] for el in collection_dict]
-
     for (course_code, course_desc, _, _) in get_courses():
         course_num = course_code.split(' ')[1][:3]
         if (course_code in keys or 'Project' in course_code or 'Thesis' in course_code or 'Special' in course_code or
@@ -74,27 +71,12 @@ def insert_courses_from_sql(school):
         insert_into_db(course_code, embedding)
         print(f'{course_code} inserted.')
 
-    # with open(json_file_path, 'r') as file:
-    #     data = json.load(file)
-    #     for course_code in data:
-    #         course_num = course_code.split(' ')[1][:3]
-    #         if (course_code in keys or 'Project' in course_code or 'Thesis' in course_code or 'Special' in course_code or
-    #             (course_num[0] == "2" and len(course_num) == 3 and course_num[-1].isnumeric())):
-    #             print(f'{course_code} already exists')
-    #             continue
-    #         course_info = f'{course_code}: {data[course_code]["course_description"]}'
-    #         course_info = course_info[course_info.index('- ')+2:]
-    #         embedding = generate_desc_embedding(course_info)
-    #         insert_into_db(course_code, embedding)
-    #         print(f'{course_code} inserted.')
-
 def find_related_courses(school, query,limit):
     embedding = generate_desc_embedding(query)
     return semantic_search(school, embedding, limit)
 
 def add_course_data(school, course_list):
     output = []
-
     for course in course_list:
         course_code, description, catoid, coid = get_course_info(school, course)
         output.append(
@@ -105,5 +87,4 @@ def add_course_data(school, course_list):
                 "coid": coid
             }
         )
-
     return output
