@@ -25,7 +25,7 @@ function CourseSearch() {
             'x-api-key': process.env.REACT_APP_API_KEY
           },
           body: JSON.stringify({
-            "school": "sjsu",
+            "school": school,
             "user_query": prompt,
             "limit": limit
           })
@@ -39,9 +39,8 @@ function CourseSearch() {
 
   return (
     <div className='course-search'>
-      <select name="schools" id="schools">
+      <select name="schools" id="schools" onChange={(e) => setSchool(e.target.value)}>
         <option value="sjsu">sjsu</option>
-        <option value="chapman">chapman</option>
       </select>
       <input 
         id='course-search-bar'
