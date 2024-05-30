@@ -77,3 +77,19 @@ a {
 #load-more:hover {
     box-shadow: 0px 1px 8px rgba(155, 119, 255, 0.5);
 }
+
+#school-select {
+    width: 434px;
+    max-width: 85vw;
+    margin-bottom: 12px;
+    padding: 8px 16px;
+    font-size: 18px;
+    line-height: 20px;
+    color: white;
+    vertical-align: middle;
+    background-color: #272822;
+    border: 1px solid rgb(155, 119, 255);
+    border-radius: 6px;
+    outline: none;
+    box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+}

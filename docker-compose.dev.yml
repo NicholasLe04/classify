@@ -1,7 +1,6 @@
 version: '3'
 services:
   server:
-    # container_name: server
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -17,59 +16,3 @@ services:
       - 80:80
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf
-
-  # frontend:
-  #   container_name: frontend
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf 
-  #   restart: 'on-failure'
-
-  cadvisor:
-    container_name: cadvisor
-    image: gcr.io/cadvisor/cadvisor:latest
-    privileged: true
-    restart: always
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker:/var/lib/docker:ro
-      - /var/run/docker.sock:/var/run/docker.sock:rw
-    devices:
-      - /dev/kmsg:/dev/kmsg
-    depends_on:
-      - server
-
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:latest
-    restart: always
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-    depends_on:
-      - cadvisor
-
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:latest
-    restart: always
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/data:/var/lib/grafana
-    user: "1000"
-    depends_on:
-      - prometheus
-    ports:
-      - 9090:3000

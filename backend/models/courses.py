@@ -3,9 +3,12 @@ from typing import List
 
 class Course(BaseModel):
     course_code: str
-    course_data: dict
+    course_description: str
+    catoid: int
+    coid: int
 
 class CourseRequest(BaseModel):
+    school: str
     user_query: str
     limit: int
 

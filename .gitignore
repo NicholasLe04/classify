@@ -1,5 +1,6 @@
 .DS_Store
 grafana/data
+backend/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

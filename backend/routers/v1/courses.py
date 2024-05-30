@@ -22,10 +22,14 @@ def get_api_key(api_key_header: str = Security(api_key_header)) -> str:
 
 @router.post("/get-courses/", response_model=CourseResponse)
 async def get_courses(request_body: CourseRequest, api_key: str = Security(get_api_key)):
-    courses = find_related_courses(
-        request_body.user_query,
-        request_body.limit
-    )
-    courses = add_course_data('./utils/descriptions.json', courses)
-    return { "courses": courses }
+    try:
+        courses = find_related_courses(
+            request_body.school,
+            request_body.user_query,
+            request_body.limit
+        )
+        courses = add_course_data(request_body.school, courses)
+        return { "courses": courses }
+    except:
+        return { "error": "error finding related courses" }
 
