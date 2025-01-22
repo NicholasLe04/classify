@@ -31,9 +31,9 @@ async def get_courses(request_body: CourseRequest, api_key: str = Security(get_a
             request_body.user_query,
             request_body.limit
         )
-        courses = LRUCache.get(cache_key)
-        if courses:
-            return { "courses": courses }
+        courses = []
+        if lru_cache.contains(cache_key):
+            courses = lru_cache.get(cache_key)
         else:
             courses = find_related_courses(
                 request_body.school,
@@ -41,8 +41,8 @@ async def get_courses(request_body: CourseRequest, api_key: str = Security(get_a
                 request_body.limit
             )
             courses = add_course_data(request_body.school, courses)
-            LRUCache.put(cache_key, courses)
-            return { "courses": courses }
+            lru_cache.put(cache_key, courses)
+        return { "courses": courses }
     except:
         return { "error": "error finding related courses" }
 
