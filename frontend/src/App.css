@@ -2,12 +2,115 @@
   color: white;
   min-height: 100vh;
   text-align: center;
-  background-color: #272822;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   display: flex;
   flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.App::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.App > * {
+  position: relative;
+  z-index: 1;
+}
+
+.service-down-banner {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.banner-title {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.banner-subtitle {
+  font-weight: 400;
+  font-size: 14px;
+  opacity: 0.9;
+  letter-spacing: 0.3px;
 }
 
 .Title {
-  color: rgb(155, 119, 255);
-  margin-top: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 800;
+  margin: 60px 0 30px 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+}
+
+.App p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 0 20px;
+}
+
+.App p strong {
+  color: #667eea;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .Title {
+    margin: 40px 0 20px 0;
+  }
+  
+  .App p {
+    font-size: 1rem;
+    padding: 0 30px;
+  }
+  
+  .banner-title {
+    font-size: 16px;
+  }
+  
+  .banner-subtitle {
+    font-size: 13px;
+  }
 }

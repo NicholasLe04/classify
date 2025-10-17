@@ -39,32 +39,34 @@ function CourseSearch() {
 
   return (
     <div className='course-search'>
-      <select name="schools" id="school-select" onChange={(e) => setSchool(e.target.value)}>
-        <option value="sjsu">
-          San Jose State University
-        </option>
-      </select>
-      <input 
-        id='course-search-bar'
-        className={loading ? 'disabled' : ''}
-        placeholder='Type something your interested in...' 
-        type='text'
-        onChange={(e) => setPrompt(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !loading) {
-            getRecommendations(5);
-          }
-        }}
-      />
+      <div className='search-controls'>
+        <select name="schools" id="school-select" onChange={(e) => setSchool(e.target.value)}>
+          <option value="sjsu">
+            San Jose State University
+          </option>
+        </select>
+        <input 
+          id='course-search-bar'
+          className={loading ? 'disabled' : ''}
+          placeholder="Type something you're interested in..." 
+          type='text'
+          onChange={(e) => setPrompt(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !loading) {
+              getRecommendations(5);
+            }
+          }}
+        />
+      </div>
       { loading && <p id='loading-text'>Finding your personalized courses...</p> }
       <ul>
         {
-          recommendations.map((course) => {
+          recommendations.map((course, index) => {
             return (
-              <a href={`https://catalog.sjsu.edu/preview_course_nopop.php?catoid=${course.catoid}&coid=${course.coid}`} target='__blank'>
+              <a key={index} href={`https://catalog.sjsu.edu/preview_course_nopop.php?catoid=${course.catoid}&coid=${course.coid}`} target='_blank' rel='noopener noreferrer'>
                 <li>
                   <p className='course-code'>{course.course_code}</p>
-                  <p>{course.course_description}</p>
+                  <p className='course-description'>{course.course_description}</p>
                 </li>
               </a>
             )
